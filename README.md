@@ -44,25 +44,26 @@ Let's build an example where you can experience how the attack happens.
 
 Now you have a hardhat project ready to go!
 
-Now let’s create Game.sol smart contract:
+Now let’s create `Game.sol` smart contract:
 
-Create a file named Game.sol inside your contracts folder and add the following lines of code.
+Create a file named `Game.sol` inside your contracts folder and add the following lines of code.
 
 ```solidity
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
 contract Game{
-uint public lastBlockTimestamp;
-receive() external payable{
-require(msg.value == 1 ether, "Not eligible");
-require(block.timestamp != lastBlockTimestamp);
+    uint public lastBlockTimestamp;
 
-    	lastBlockTimestamp = block.timestamp;
-    	if(block.timestamp % 10 == 0){
-    		(bool sent, ) = msg.sender.call{value: address(this).balance}("");
-    		require(sent, "Failed to send");
-    	}
+    receive() external payable{
+        require(msg.value == 1 ether, "Not eligible");
+        require(block.timestamp != lastBlockTimestamp);
+
+        lastBlockTimestamp = block.timestamp;
+        if(block.timestamp % 10 == 0){
+            (bool sent, ) = msg.sender.call{value: address(this).balance}("");
+            require(sent, "Failed to send");
+        }
     }
 }
 ```
@@ -74,11 +75,12 @@ The attack will happen as follows:
 
 ## Prevention:
 
-You should not use block.timestamp for logic inside your contract
-Use the 15-second rule: It is safe to utilize the block.timestamp if the magnitude of your time-dependent event may vary by 15 seconds while maintaining integrity.
+- Avoid using block.number as a timestamp
+- <b>Use the 15-second rule:</b> It is safe to utilize the block.timestamp if the magnitude of your time-dependent event may vary by 15 seconds while maintaining integrity.
 
 Keep BUIDLING, WAGMI 🚀
 
 ## References
 
 - [Solidity Docs](https://docs.soliditylang.org/en/v0.8.13/units-and-global-variables.html#block-and-transaction-properties)
+- [Consensys](https://consensys.github.io/smart-contract-best-practices/development-recommendations/solidity-specific/timestamp-dependence/)
