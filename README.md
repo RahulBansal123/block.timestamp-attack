@@ -7,6 +7,7 @@ block.timestamp is a global variable that returns the timestamp at which the blo
 block.timestamp is a global variable (expressed in milliseconds since the start of the Unix epoch) that returns the timestamp at which the block is mined and it can be manipulated by the miner with some restrictions like the next block’s timestamp should be after the previous block’s timestamp and the block's timestamp value is within 100 milliseconds of the UTC time.
 
 ## Manipulating block.timestamp
+Miners can modify the next block's timestamp with the client software they're using to mine the blocks. The Geth and Parity clients are the most commonly used Ethereum client software. These two clients use their software code and algorithms to adhere to the 15-second rule, which states that the timestamp discrepancy between the two blocks should not exceed 15 seconds. Otherwise, the block is rejected by the client programme. As a result, miners may simply change the next block's timestamp for their personal gain within the 15-second time limit.
 
 ### What will happen?
 
